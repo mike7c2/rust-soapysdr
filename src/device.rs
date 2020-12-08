@@ -820,6 +820,29 @@ impl Device {
     // TODO: registers
 
     // TODO: settings
+    pub fn write_setting(
+        &self,
+        key : &str,
+        value : &str
+    ) -> Result<(), Error> {
+        let key_cstr = CString::new(key).unwrap();
+        let value_cstr = CString::new(value).unwrap();
+        unsafe {
+            SoapySDRDevice_writeSetting(self.inner.ptr, key_cstr.as_ptr(), value_cstr.as_ptr());
+            check_error(())
+        }
+    }
+
+    pub fn read_setting(
+        &self,
+        key : &str,
+    ) -> Result<String, Error> {
+        let key_cstr = CString::new(key).unwrap();
+        unsafe {
+            string_result(SoapySDRDevice_readSetting(self.inner.ptr, key_cstr.as_ptr()))
+        }
+    }
+
 
     // TODO: gpio
 
