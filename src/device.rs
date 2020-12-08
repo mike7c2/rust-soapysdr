@@ -954,7 +954,7 @@ impl<E: StreamSample> RxStream<E> {
                 num_samples,
                 &mut self.flags as *mut _,
                 &mut self.time_ns as *mut _,
-                timeout_us.into()
+                (timeout_us as i32).into()
             ))?;
 
             Ok(len as usize)
@@ -1078,7 +1078,7 @@ impl<E: StreamSample> TxStream<E> {
                 num_elems,
                 &mut flags as *mut _,
                 at_ns.unwrap_or(0),
-                timeout_us.into()
+                (timeout_us as i32).into()
             ))?;
 
             Ok(len as usize)
